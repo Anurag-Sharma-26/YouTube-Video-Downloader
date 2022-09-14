@@ -1,33 +1,34 @@
 from tkinter import *
 from pytube import YouTube
 
-# create display window
-window = Tk()
-window.geometry('800x400')
-window.resizable(0, 0)
-window.title("Youtube video downloader")
-Label(window, text="Youtube Video Downloader",
-      font='arial 26 bold').pack()
 
-# Link Input
-link = StringVar()
-
-Label(window, text='Paste Link here:',
-      font='arial 16 bold').place(x=70, y=90)
-link_enter = Entry(window, width=100, textvariable=link
-                   ).place(x=40, y=120)
-
-
-# download function
+# Download Function
 def downloader():
     url = YouTube(str(link.get()))
+    location1 = str(location.get())
     video = url.streams.get_highest_resolution()
-    video.download("D:\\videos\\")
-    Label(window, text='DOWNLOADED', font='arial 16'
-          ).place(x=280, y=250)
+    video.download(location1)
+    Label(display, text=('DOWNLOADED in ' + location1), font='arial 16').place(x=305, y=300)
 
 
-Button(window, text='DOWNLOAD', font='arial 16', bg='pale violet red',
-       padx=2, command=downloader).place(x=280, y=200)
+# Creation of Display Window
+display = Tk()
+display.geometry('800x400')
+display.resizable(0, 0)
+display.title("Youtube Video Downloader")
+Label(display, text="Youtube Video Downloader", font='arial 26 bold').pack()
 
-window.mainloop()
+# Download Link
+link = StringVar()
+Label(display, text='Enter the Video Link here:', font='arial 16 bold').place(x=41, y=80)
+link_enter = Entry(display, width=100, textvariable=link).place(x=40, y=110)
+
+# Download Location
+location = StringVar()
+Label(display, text='Enter the Download Location here:', font='arial 16 bold').place(x=41, y=150)
+location_enter = Entry(display, width=100, textvariable=location).place(x=40, y=180)
+
+# Download Button
+Button(display, text='DOWNLOAD', font='arial 16', bg='pale violet red', padx=2, command=downloader).place(x=320, y=250)
+
+display.mainloop()
